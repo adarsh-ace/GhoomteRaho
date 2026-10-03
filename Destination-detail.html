@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Destination – Ghoomte Raho</title>
+  <link rel="stylesheet" href="style.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+</head>
+<body>
+
+<nav id="navbar">
+  <div class="nav-inner">
+    <a href="index.html" class="logo">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3l4 8 5-5 5 15H2L8 3z"/></svg>
+      Ghoomte Raho
+    </a>
+    <div class="nav-links">
+      <a href="treks.html">All Treks</a>
+      <a href="destinations.html" class="active">Destinations</a>
+      <a href="explore.html">AI Explore</a>
+    </div>
+    <div class="nav-auth">
+      <!-- <a href="#" class="btn-ghost">Log in</a> -->
+      <a href="auth.html" class="btn-primary">Sign up</a>
+    </div>
+    <button class="hamburger" id="hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="treks.html">All Treks</a>
+    <a href="destinations.html">Destinations</a>
+    <a href="explore.html">AI Explore</a>
+    <a href="#">Log in</a>
+    <a href="#" class="btn-primary">Sign up</a>
+  </div>
+</nav>
+
+<!-- DETAIL HERO -->
+<section class="detail-hero" id="detailHero">
+  <div class="detail-hero-bg" id="detailHeroBg"></div>
+  <div class="page-hero-overlay"></div>
+  <div class="detail-hero-content">
+    <a href="destinations.html" class="back-link">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M19 12H5"/><polyline points="12 19 5 12 12 5"/></svg>
+      All Destinations
+    </a>
+    <div class="detail-hero-tag" id="detailTag"></div>
+    <h1 class="hero-title" id="detailName"></h1>
+    <p class="hero-sub" id="detailState"></p>
+    <div class="detail-hero-stats" id="detailStats"></div>
+  </div>
+</section>
+
+<!-- MAIN CONTENT -->
+<main class="detail-main">
+
+  <!-- MAP SECTION -->
+  <section class="detail-map-section">
+    <div class="detail-map-header">
+      <div>
+        <h2>Places on the Map</h2>
+        <p class="section-sub" id="mapRefNote">All distances measured from the reference point.</p>
+      </div>
+      <div class="map-legend">
+        <span class="legend-dot popular"></span> Popular
+        <span class="legend-dot hidden"></span> Hidden Gem
+      </div>
+    </div>
+    <div class="detail-map-wrap">
+      <div id="destMap"></div>
+    </div>
+  </section>
+
+  <!-- PLACES FILTER -->
+  <section class="detail-places-section">
+    <div class="places-filter-bar">
+      <div class="search-wrap">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        <input type="text" id="placeSearch" placeholder="Search places…"/>
+      </div>
+      <div class="places-tabs" id="placesFilter">
+        <button class="dest-tab active" data-filter="all">All</button>
+        <button class="dest-tab" data-filter="popular">Popular</button>
+        <button class="dest-tab" data-filter="hidden">Hidden Gems</button>
+        <button class="dest-tab" data-filter="religious">Religious</button>
+        <button class="dest-tab" data-filter="nature">Nature</button>
+        <button class="dest-tab" data-filter="adventure">Adventure</button>
+      </div>
+    </div>
+    <div class="places-grid" id="placesGrid"></div>
+  </section>
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-logo">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3l4 8 5-5 5 15H2L8 3z"/></svg>
+      Ghoomte Raho
+    </div>
+    <p class="footer-tagline">Built for trekkers, by trekkers. Discover the hidden gems of India.</p>
+    <div class="footer-links">
+      <a href="treks.html">Treks</a>
+      <a href="destinations.html">Destinations</a>
+      <a href="explore.html">Explore</a>
+    </div>
+  </div>
+</footer>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+// =============================================
+// DESTINATION DATA
+// =============================================
+const DEST_DATA = {
+  rishikesh: {
+    name: "Rishikesh", state: "Uttarakhand", tag: "Adventure Hub",
+    img: "https://images.unsplash.com/photo-1544681280-d762bcde6d0f?w=1400&q=80",
+    desc: "Yoga capital of the world & gateway to the Himalayas.",
+    refPoint: "Laxman Jhula", refLat: 30.1194, refLng: 78.3229,
+    mapCenter: [30.1094, 78.3054], mapZoom: 13,
+    places: [
+      { name:"Laxman Jhula", type:"popular", cat:"religious", lat:30.1194, lng:78.3229, dist:0, img:"https://images.unsplash.com/photo-1591018653348-81a4ce4b5448?w=400&q=80", desc:"Iconic suspension bridge over the Ganges, reference point of Rishikesh. Sacred and scenic.", entryFee:"Free", bestTime:"Oct–Mar", tips:"Visit at sunrise for golden light." },
+      { name:"Ram Jhula", type:"popular", cat:"religious", lat:30.1031, lng:78.3076, dist:1.8, img:"https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&q=80", desc:"Older and larger than Laxman Jhula, connects two parts of the holy town.", entryFee:"Free", bestTime:"Oct–Mar", tips:"Less crowded in the morning." },
+      { name:"Triveni Ghat", type:"popular", cat:"religious", lat:30.0939, lng:78.2951, dist:3.2, img:"https://images.unsplash.com/photo-1561361058-c24e5f2517a0?w=400&q=80", desc:"Main bathing ghat where three rivers meet. Famous for evening Ganga Aarti.", entryFee:"Free", bestTime:"Year-round", tips:"Evening aarti at 6 PM is unmissable." },
+      { name:"Neelkanth Mahadev Temple", type:"popular", cat:"religious", lat:30.1667, lng:78.3833, dist:11, img:"https://images.unsplash.com/photo-1604537529428-15bcbeecfe4d?w=400&q=80", desc:"One of the most important Shiva temples, situated 1330m above sea level in dense forests.", entryFee:"Free", bestTime:"Oct–Apr", tips:"Trek or jeep ride from Laxman Jhula." },
+      { name:"Rajaji National Park", type:"popular", cat:"nature", lat:30.0500, lng:78.2000, dist:15, img:"https://images.unsplash.com/photo-1534476478164-b15bde51b27e?w=400&q=80", desc:"Home to elephants, tigers, leopards and 315 bird species in the Shivalik range.", entryFee:"₹150", bestTime:"Nov–Jun", tips:"Jeep safari in morning hours is best." },
+      { name:"White Water Rafting", type:"popular", cat:"adventure", lat:30.1300, lng:78.2900, dist:5, img:"https://images.unsplash.com/photo-1530866495561-507c9faab2ed?w=400&q=80", desc:"Grade 3-5 rapids on Ganga from Shivpuri/Marine Drive to Rishikesh.", entryFee:"₹600–1200", bestTime:"Sep–Jun", tips:"Book early in peak season. Avoid monsoon." },
+      { name:"Beatles Ashram (Chaurasi Kutia)", type:"popular", cat:"nature", lat:30.1083, lng:78.3150, dist:2.4, img:"https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&q=80", desc:"Abandoned ashram where the Beatles stayed in 1968. Now a stunning graffiti art park.", entryFee:"₹150", bestTime:"Oct–Mar", tips:"Explore the graffiti-covered kutias — bring a camera." },
+      { name:"Parmarth Niketan Ashram", type:"popular", cat:"religious", lat:30.1072, lng:78.3134, dist:2.2, img:"https://images.unsplash.com/photo-1491557345352-5929e343eb89?w=400&q=80", desc:"Largest ashram in Rishikesh hosting evening Ganga Aarti with thousands of diyas.", entryFee:"Free", bestTime:"Year-round", tips:"Evening aarti here is the most elaborate." },
+      { name:"Kunjapuri Devi Temple", type:"hidden", cat:"religious", lat:30.2167, lng:78.3333, dist:25, img:"https://images.unsplash.com/photo-1566552881560-0be862a7c445?w=400&q=80", desc:"Hidden temple at 1676m with breathtaking sunrise views of Gangotri, Kedarnath & Badrinath.", entryFee:"Free", bestTime:"Oct–Mar", tips:"Hike up at 4 AM for the best sunrise views." },
+      { name:"Neer Garh Waterfall", type:"hidden", cat:"nature", lat:30.1350, lng:78.3400, dist:6, img:"https://images.unsplash.com/photo-1448375240586-882707db888b?w=400&q=80", desc:"A beautiful two-tiered waterfall hidden in the jungle, reachable via a short trek.", entryFee:"₹50", bestTime:"Aug–Nov", tips:"Go early morning before crowds arrive." },
+      { name:"Phool Chatti Ashram", type:"hidden", cat:"religious", lat:30.1500, lng:78.3300, dist:8, img:"https://images.unsplash.com/photo-1544681280-d762bcde6d0f?w=400&q=80", desc:"Peaceful riverside ashram almost unknown to tourists. Yoga & meditation by the Ganga.", entryFee:"Free", bestTime:"Oct–Apr", tips:"Stay overnight for the full experience." },
+      { name:"Vashishtha Cave", type:"hidden", cat:"religious", lat:30.1250, lng:78.3500, dist:5, img:"https://images.unsplash.com/photo-1605637297785-f8a4ffd2a34e?w=400&q=80", desc:"Ancient meditation cave used by sage Vashishtha. Silent and deeply spiritual.", entryFee:"Free", bestTime:"Year-round", tips:"Meditate inside — bring a torch." },
+      { name:"Camping at Shivpuri", type:"popular", cat:"adventure", lat:30.1600, lng:78.2800, dist:18, img:"https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?w=400&q=80", desc:"Premier campsite on the Ganges riverbank with bonfire, rafting and stargazing.", entryFee:"₹800–1500/night", bestTime:"Oct–Jun", tips:"Book through a certified operator." },
+      { name:"Bungee Jumping at Mohan Chatti", type:"popular", cat:"adventure", lat:30.1700, lng:78.2600, dist:20, img:"https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=400&q=80", desc:"India's highest fixed bungee jump at 83 metres over the Himalayas.", entryFee:"₹3550", bestTime:"Oct–Jun", tips:"Book online in advance. ID required." },
+      { name:"Swarg Ashram Area", type:"popular", cat:"religious", lat:30.1150, lng:78.3200, dist:1.2, img:"https://images.unsplash.com/photo-1491557345352-5929e343eb89?w=400&q=80", desc:"Peaceful pedestrian-only area with dozens of ashrams, cafes and yoga centres.", entryFee:"Free", bestTime:"Year-round", tips:"Try the famous German Bakery here." },
+      { name:"Gliding at Rishikesh", type:"hidden", cat:"adventure", lat:30.0900, lng:78.2700, dist:10, img:"https://images.unsplash.com/photo-1551632811-561732d1e306?w=400&q=80", desc:"Paragliding and gliding over the Ganga valley — still relatively undiscovered.", entryFee:"₹1500–2500", bestTime:"Oct–May", tips:"Less crowded than Bir Billing." },
+      { name:"Gita Bhawan", type:"popular", cat:"religious", lat:30.1060, lng:78.3120, dist:2, img:"https://images.unsplash.com/photo-1524613032530-449a5d94c285?w=400&q=80", desc:"Massive temple complex with free accommodation for pilgrims and beautiful sculptures.", entryFee:"Free", bestTime:"Year-round", tips:"Free prasad meals available." },
+      { name:"Surya Kund", type:"hidden", cat:"nature", lat:30.1280, lng:78.3450, dist:5.5, img:"https://images.unsplash.com/photo-1448375240586-882707db888b?w=400&q=80", desc:"A hidden hot spring near the forest, barely known even to locals.", entryFee:"Free", bestTime:"Nov–Feb", tips:"Combine with Neer Garh waterfall visit." },
+    ]
+  },
+  manali: {
+    name: "Manali", state: "Himachal Pradesh", tag: "Snow Trails",
+    img: "https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?w=1400&q=80",
+    desc: "Gateway to Rohtang and Lahaul-Spiti in the Kullu Valley.",
+    refPoint: "Mall Road", refLat: 32.2396, refLng: 77.1887,
+    mapCenter: [32.2396, 77.1887], mapZoom: 12,
+    places: [
+      { name:"Mall Road", type:"popular", cat:"nature", lat:32.2396, lng:77.1887, dist:0, img:"https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?w=400&q=80", desc:"The central promenade and reference point of Manali — shops, cafes and mountain views.", entryFee:"Free", bestTime:"Year-round", tips:"Evening stroll is magical." },
+      { name:"Rohtang Pass", type:"popular", cat:"adventure", lat:32.3714, lng:77.2402, dist:51, img:"https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=400&q=80", desc:"Snow-covered high mountain pass at 3978m connecting Kullu and Lahaul valleys.", entryFee:"₹500 permit", bestTime:"May–Oct", tips:"Book permit online 24hrs before." },
+      { name:"Solang Valley", type:"popular", cat:"adventure", lat:32.3194, lng:77.1558, dist:14, img:"https://images.unsplash.com/photo-1604608672516-5413d1e7e767?w=400&q=80", desc:"Adventure sports hub — skiing in winter, zorbing, paragliding in summer.", entryFee:"Varies", bestTime:"Dec–Feb (snow), May–Oct (others)", tips:"Paragliding in morning has best winds." },
+      { name:"Hadimba Devi Temple", type:"popular", cat:"religious", lat:32.2456, lng:77.1806, dist:2, img:"https://images.unsplash.com/photo-1566552881560-0be862a7c445?w=400&q=80", desc:"Ancient cedar forest temple of Goddess Hadimba, built in 1553 with pagoda architecture.", entryFee:"Free", bestTime:"Year-round", tips:"Remove shoes before entering the cedar grove." },
+      { name:"Old Manali", type:"popular", cat:"nature", lat:32.2550, lng:77.1900, dist:2.5, img:"https://images.unsplash.com/photo-1448375240586-882707db888b?w=400&q=80", desc:"Bohemian village with stone houses, apple orchards and budget cafes.", entryFee:"Free", bestTime:"Mar–Oct", tips:"Best cafes: Lazy Dog, Dylan's Toasted." },
+      { name:"Beas River", type:"popular", cat:"nature", lat:32.2300, lng:77.2000, dist:3, img:"https://images.unsplash.com/photo-1530866495561-507c9faab2ed?w=400&q=80", desc:"Glacier-fed river ideal for trout fishing, riverside picnics and short rafting.", entryFee:"Free", bestTime:"Apr–Jun", tips:"Trout fishing permits available." },
+      { name:"Naggar Castle", type:"popular", cat:"nature", lat:32.1000, lng:77.1500, dist:21, img:"https://images.unsplash.com/photo-1588083949404-c4f1ed1323b3?w=400&q=80", desc:"500-year-old castle converted to heritage hotel with valley and Himalayan views.", entryFee:"₹50", bestTime:"Mar–Nov", tips:"Lunch at the castle restaurant is worth it." },
+      { name:"Chandrakhani Pass", type:"hidden", cat:"adventure", lat:32.1500, lng:77.2000, dist:25, img:"https://images.unsplash.com/photo-1551632811-561732d1e306?w=400&q=80", desc:"Lesser-known high altitude pass with 360° Himalayan views. Entry to Magic Valley.", entryFee:"Free", bestTime:"May–Oct", tips:"2-day trek from Naggar. Very few crowds." },
+      { name:"Bijli Mahadev Temple", type:"hidden", cat:"religious", lat:31.9500, lng:77.1200, dist:40, img:"https://images.unsplash.com/photo-1605637297785-f8a4ffd2a34e?w=400&q=80", desc:"Remote temple at 2438m where lightning strikes the Shiva linga annually — sacred mystery.", entryFee:"Free", bestTime:"May–Oct", tips:"6km trek from Chansari. Barely visited." },
+      { name:"Hamta Pass Trek", type:"popular", cat:"adventure", lat:32.3000, lng:77.3500, dist:28, img:"https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?w=400&q=80", desc:"4270m pass crossing from green Kullu valley to stark Lahaul — one of the best 4-day treks.", entryFee:"₹2000 guide", bestTime:"Jun–Sep", tips:"Stay at Chika campsite for best views." },
+      { name:"Manikaran Sahib", type:"popular", cat:"religious", lat:32.0333, lng:77.3333, dist:45, img:"https://images.unsplash.com/photo-1491557345352-5929e343eb89?w=400&q=80", desc:"Holy Sikh Gurudwara with natural hot springs — food cooked in geothermal water.", entryFee:"Free", bestTime:"Year-round", tips:"Free langar (community meal) at the Gurudwara." },
+      { name:"Deo Tibba Base Camp", type:"hidden", cat:"adventure", lat:32.3500, lng:77.4000, dist:35, img:"https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=400&q=80", desc:"Remote base camp of Deo Tibba peak at 4900m. Virtually no tourists.", entryFee:"Free", bestTime:"Jun–Sep", tips:"5-day trek. Need local guide." },
+      { name:"Vashisht Hot Springs", type:"popular", cat:"religious", lat:32.2583, lng:77.1917, dist:3, img:"https://images.unsplash.com/photo-1544681280-d762bcde6d0f?w=400&q=80", desc:"Natural sulphur hot springs near ancient Vashisht temple — perfect post-trek soak.", entryFee:"₹10", bestTime:"Oct–Feb", tips:"Best in winter — contrast of hot spring and snow." },
+      { name:"Patalsu Peak", type:"hidden", cat:"adventure", lat:32.3300, lng:77.1800, dist:20, img:"https://images.unsplash.com/photo-1604608672516-5413d1e7e767?w=400&q=80", desc:"Barely known 4200m peak above Solang Valley, doable as a day hike.", entryFee:"Free", bestTime:"May–Oct", tips:"Start before 7 AM. No guide needed." },
+      { name:"Sissu Village", type:"hidden", cat:"nature", lat:32.4500, lng:77.1000, dist:55, img:"https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?w=400&q=80", desc:"Tiny Lahauli village with the most dramatic waterfall backdrop in Himachal.", entryFee:"Free", bestTime:"Jun–Sep", tips:"Now accessible via Atal Tunnel." },
+    ]
+  },
+  jaisalmer: {
+    name: "Jaisalmer", state: "Rajasthan", tag: "Desert Kingdom",
+    img: "https://images.unsplash.com/photo-1598977639756-5d80439eb18b?w=1400&q=80",
+    desc: "The Golden City rising from the Thar Desert.",
+    refPoint: "Jaisalmer Fort", refLat: 26.9124, refLng: 70.9099,
+    mapCenter: [26.9124, 70.9099], mapZoom: 12,
+    places: [
+      { name:"Jaisalmer Fort (Sonar Qila)", type:"popular", cat:"nature", lat:26.9124, lng:70.9099, dist:0, img:"https://images.unsplash.com/photo-1598977639756-5d80439eb18b?w=400&q=80", desc:"One of the world's largest living forts — 99 bastions, palaces and havelis in golden sandstone.", entryFee:"₹100", bestTime:"Oct–Mar", tips:"Stay inside the fort for a magical experience." },
+      { name:"Sam Sand Dunes", type:"popular", cat:"adventure", lat:26.8667, lng:70.5500, dist:45, img:"https://images.unsplash.com/photo-1509316785289-025f5b846b35?w=400&q=80", desc:"The iconic Great Thar Desert dunes — camel rides, jeep safaris and overnight camping.", entryFee:"Camel ride: ₹300", bestTime:"Oct–Mar", tips:"Stay for sunset and stargazing." },
+      { name:"Patwon Ki Haveli", type:"popular", cat:"nature", lat:26.9140, lng:70.9120, dist:0.3, img:"https://images.unsplash.com/photo-1567591370641-755e01e07614?w=400&q=80", desc:"The grandest cluster of 5 connected havelis in Jaisalmer with intricate sandstone carvings.", entryFee:"₹100", bestTime:"Oct–Mar", tips:"Hire a guide to understand the architecture." },
+      { name:"Gadisar Lake", type:"popular", cat:"nature", lat:26.9050, lng:70.9250, dist:1.5, img:"https://images.unsplash.com/photo-1524613032530-449a5d94c285?w=400&q=80", desc:"Manmade reservoir built in 1367 with beautiful temples, ghats and migratory birds.", entryFee:"Free (boat: ₹100)", bestTime:"Oct–Mar", tips:"Sunrise boat ride is spectacular." },
+      { name:"Kuldhara Abandoned Village", type:"popular", cat:"nature", lat:26.8500, lng:70.8000, dist:18, img:"https://images.unsplash.com/photo-1590237748978-e84e2a8a8e81?w=400&q=80", desc:"A village abandoned overnight 200 years ago by 1500 Paliwal Brahmins — still a mystery.", entryFee:"₹50", bestTime:"Oct–Mar", tips:"Go at dusk for a spooky atmosphere." },
+      { name:"Thar Heritage Museum", type:"popular", cat:"nature", lat:26.9130, lng:70.9090, dist:0.1, img:"https://images.unsplash.com/photo-1477587458883-47145ed31074?w=400&q=80", desc:"Private museum with rare fossils, currency, weapons and desert life artefacts.", entryFee:"₹70", bestTime:"Year-round", tips:"Run by a local historian — ask for a personal tour." },
+      { name:"Khuri Sand Dunes", type:"hidden", cat:"adventure", lat:26.6000, lng:70.8000, dist:45, img:"https://images.unsplash.com/photo-1509316785289-025f5b846b35?w=400&q=80", desc:"Less famous but more authentic dune village than Sam — traditional music, few tourists.", entryFee:"Free", bestTime:"Oct–Mar", tips:"Stay with a local family for ₹500/night." },
+      { name:"Bada Bagh", type:"popular", cat:"religious", lat:26.9667, lng:70.8833, dist:6, img:"https://images.unsplash.com/photo-1598977639756-5d80439eb18b?w=400&q=80", desc:"Royal cenotaphs of Bhatti rulers with carved sandstone canopies and windmills.", entryFee:"₹50", bestTime:"Oct–Mar", tips:"Golden sunset from here is legendary." },
+      { name:"Tanot Mata Temple", type:"hidden", cat:"religious", lat:27.0833, lng:70.3500, dist:120, img:"https://images.unsplash.com/photo-1566552881560-0be862a7c445?w=400&q=80", desc:"A BSF-protected temple near Pakistan border where bombs fell but never exploded in 1971 war.", entryFee:"Free", bestTime:"Oct–Feb", tips:"Take a bus from Jaisalmer — no private vehicles without permit." },
+      { name:"Desert National Park", type:"hidden", cat:"nature", lat:27.0000, lng:70.7000, dist:40, img:"https://images.unsplash.com/photo-1534476478164-b15bde51b27e?w=400&q=80", desc:"One of India's largest national parks protecting rare Great Indian Bustard and desert foxes.", entryFee:"₹200 + ₹800 jeep", bestTime:"Oct–Mar", tips:"Pre-dawn safari is best for Great Indian Bustard sighting." },
+      { name:"Vyas Chatri", type:"hidden", cat:"religious", lat:26.9200, lng:70.9000, dist:0.5, img:"https://images.unsplash.com/photo-1598977639756-5d80439eb18b?w=400&q=80", desc:"Hilltop cenotaphs rarely visited by tourists with the best view of the golden fort.", entryFee:"Free", bestTime:"Oct–Mar", tips:"Climb up just before sunset." },
+      { name:"Nathmal Ki Haveli", type:"popular", cat:"nature", lat:26.9135, lng:70.9115, dist:0.2, img:"https://images.unsplash.com/photo-1567591370641-755e01e07614?w=400&q=80", desc:"19th century prime minister's haveli built by two brothers — each half slightly different.", entryFee:"Free", bestTime:"Year-round", tips:"Spot the two elephants above the entrance." },
+      { name:"Fossil Park Akal", type:"hidden", cat:"nature", lat:27.0000, lng:70.9500, dist:17, img:"https://images.unsplash.com/photo-1590237748978-e84e2a8a8e81?w=400&q=80", desc:"180-million-year-old fossilised forest — petrified tree trunks in the middle of the desert.", entryFee:"₹25", bestTime:"Oct–Mar", tips:"Barely visited — you might have it to yourself." },
+    ]
+  },
+  shimla: {
+    name: "Shimla", state: "Himachal Pradesh", tag: "Colonial Charm",
+    img: "https://images.unsplash.com/photo-1597466599360-3b9775841aec?w=1400&q=80",
+    desc: "Former summer capital of British India with Victorian architecture.",
+    refPoint: "The Ridge", refLat: 31.1048, refLng: 77.1734,
+    mapCenter: [31.1048, 77.1734], mapZoom: 12,
+    places: [
+      { name:"The Ridge", type:"popular", cat:"nature", lat:31.1048, lng:77.1734, dist:0, img:"https://images.unsplash.com/photo-1597466599360-3b9775841aec?w=400&q=80", desc:"The heart of Shimla — large open ground with panoramic views of snow peaks.", entryFee:"Free", bestTime:"Year-round", tips:"Evening walk here is beautiful." },
+      { name:"Mall Road", type:"popular", cat:"nature", lat:31.1040, lng:77.1700, dist:0.4, img:"https://images.unsplash.com/photo-1588083949404-c4f1ed1323b3?w=400&q=80", desc:"Iconic colonial shopping street with Gaiety Theatre, cafes and mountain views.", entryFee:"Free", bestTime:"Year-round", tips:"No vehicles allowed — peaceful walk." },
+      { name:"Jakhu Temple", type:"popular", cat:"religious", lat:31.1095, lng:77.1850, dist:2, img:"https://images.unsplash.com/photo-1566552881560-0be862a7c445?w=400&q=80", desc:"Ancient Hanuman temple at 2455m with a 33m statue visible from the entire town.", entryFee:"Free", bestTime:"Year-round", tips:"Beware of monkeys — keep bags closed." },
+      { name:"Kufri", type:"popular", cat:"adventure", lat:31.0983, lng:77.2650, dist:13, img:"https://images.unsplash.com/photo-1604608672516-5413d1e7e767?w=400&q=80", desc:"Popular ski resort in winter with yak rides and Himalayan Nature Park.", entryFee:"₹200", bestTime:"Dec–Feb (snow), Mar–Jun", tips:"Book skiing equipment in advance." },
+      { name:"Christ Church", type:"popular", cat:"religious", lat:31.1050, lng:77.1730, dist:0.1, img:"https://images.unsplash.com/photo-1597466599360-3b9775841aec?w=400&q=80", desc:"Second oldest church in North India (1857) with beautiful stained glass windows.", entryFee:"Free", bestTime:"Year-round", tips:"Sunday service at 10 AM is open to all." },
+      { name:"Kalka-Shimla Toy Train", type:"popular", cat:"adventure", lat:31.1000, lng:77.1700, dist:1, img:"https://images.unsplash.com/photo-1490822180779-1e74f5b3973c?w=400&q=80", desc:"UNESCO World Heritage narrow gauge railway — 96km through 102 tunnels and 800+ bridges.", entryFee:"₹20–300", bestTime:"Year-round", tips:"Window seat on the right side for best views." },
+      { name:"Chadwick Falls", type:"popular", cat:"nature", lat:31.1200, lng:77.1600, dist:3.5, img:"https://images.unsplash.com/photo-1448375240586-882707db888b?w=400&q=80", desc:"67m waterfall surrounded by dense forests, best during monsoon season.", entryFee:"Free", bestTime:"Jul–Sep", tips:"Trail through forest is scenic — wear good shoes." },
+      { name:"Tattapani Hot Springs", type:"hidden", cat:"nature", lat:31.3167, lng:77.0500, dist:51, img:"https://images.unsplash.com/photo-1544681280-d762bcde6d0f?w=400&q=80", desc:"Sulphur hot springs on the Sutlej riverbank — barely known outside Himachal.", entryFee:"Free", bestTime:"Oct–Mar", tips:"Best soaked in winter for the warmth contrast." },
+      { name:"Chail", type:"hidden", cat:"nature", lat:30.9500, lng:77.2000, dist:33, img:"https://images.unsplash.com/photo-1588083949404-c4f1ed1323b3?w=400&q=80", desc:"Former private retreat of Maharaja Bhupinder Singh — world's highest cricket ground (2250m).", entryFee:"Free", bestTime:"Mar–Nov", tips:"Stay at Chail Palace for a royal experience." },
+      { name:"Naldehra Golf Course", type:"hidden", cat:"adventure", lat:31.2000, lng:77.1000, dist:23, img:"https://images.unsplash.com/photo-1590050752117-238cb0fb12b1?w=400&q=80", desc:"Oldest 9-hole golf course in India (1905) at 2044m with Himalayan views.", entryFee:"₹500 green fee", bestTime:"Apr–Nov", tips:"Rent clubs at the clubhouse." },
+      { name:"Shali Tibba", type:"hidden", cat:"adventure", lat:31.1500, lng:77.2000, dist:8, img:"https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=400&q=80", desc:"Highest peak near Shimla at 2700m — hidden viewpoint almost unknown to tourists.", entryFee:"Free", bestTime:"Apr–Oct", tips:"3hr hike from Dhalli. Zero crowds." },
+    ]
+  },
+  leh: {
+    name: "Leh – Ladakh", state: "Ladakh", tag: "High Altitude",
+    img: "https://images.unsplash.com/photo-1589182373726-e4f658ab50f0?w=1400&q=80",
+    desc: "Land of high passes, monasteries and turquoise lakes.",
+    refPoint: "Leh Palace", refLat: 34.1642, refLng: 77.5849,
+    mapCenter: [34.1642, 77.5849], mapZoom: 9,
+    places: [
+      { name:"Leh Palace", type:"popular", cat:"religious", lat:34.1642, lng:77.5849, dist:0, img:"https://images.unsplash.com/photo-1589182373726-e4f658ab50f0?w=400&q=80", desc:"17th century 9-storey palace of Ladakhi royalty with panoramic views of Leh town.", entryFee:"₹25", bestTime:"Jun–Sep", tips:"Sunset views from the rooftop are extraordinary." },
+      { name:"Pangong Tso Lake", type:"popular", cat:"nature", lat:33.7600, lng:78.6400, dist:140, img:"https://images.unsplash.com/photo-1604608672516-5413d1e7e767?w=400&q=80", desc:"Stunning 134km-long lake at 4350m spanning India-China border — blue beyond description.", entryFee:"₹400 permit", bestTime:"Jun–Sep", tips:"Stay overnight to see both sunset and sunrise." },
+      { name:"Nubra Valley", type:"popular", cat:"adventure", lat:34.7600, lng:77.5500, dist:150, img:"https://images.unsplash.com/photo-1509316785289-025f5b846b35?w=400&q=80", desc:"Double-humped Bactrian camel rides in the sand dunes at 3048m — surreal cold desert.", entryFee:"Permit required", bestTime:"Jun–Sep", tips:"Cross Khardung La (5380m) — world's one of highest motorable roads." },
+      { name:"Thiksey Monastery", type:"popular", cat:"religious", lat:33.9768, lng:77.6688, dist:19, img:"https://images.unsplash.com/photo-1566552881560-0be862a7c445?w=400&q=80", desc:"12-storey monastery complex resembling the Potala Palace in Tibet. 15th century.", entryFee:"₹30", bestTime:"Jun–Sep", tips:"Morning puja at 6 AM — ask permission to attend." },
+      { name:"Magnetic Hill", type:"popular", cat:"nature", lat:34.2300, lng:77.2200, dist:30, img:"https://images.unsplash.com/photo-1589182373726-e4f658ab50f0?w=400&q=80", desc:"A gravity-defying road where vehicles appear to move uphill without engine.", entryFee:"Free", bestTime:"Jun–Sep", tips:"The optical illusion works best at the marked spot." },
+      { name:"Tso Moriri Lake", type:"hidden", cat:"nature", lat:32.9000, lng:78.3200, dist:240, img:"https://images.unsplash.com/photo-1604608672516-5413d1e7e767?w=400&q=80", desc:"The most pristine high-altitude lake in Ladakh at 4522m. Almost no tourists.", entryFee:"Permit required", bestTime:"Jun–Sep", tips:"2-day jeep from Leh. Stay at Korzok village homestay." },
+      { name:"Hemis Monastery", type:"popular", cat:"religious", lat:33.9000, lng:77.7000, dist:40, img:"https://images.unsplash.com/photo-1491557345352-5929e343eb89?w=400&q=80", desc:"The largest and richest monastery in Ladakh, famous for its annual Hemis Festival.", entryFee:"₹30", bestTime:"Jun (Festival)", tips:"Hemis Festival in June is world-famous." },
+      { name:"Sham Valley Trek", type:"hidden", cat:"adventure", lat:34.2500, lng:77.3000, dist:50, img:"https://images.unsplash.com/photo-1551632811-561732d1e306?w=400&q=80", desc:"Easy 3-day trekking route through villages and ancient monasteries at accessible altitudes.", entryFee:"Guide: ₹1500/day", bestTime:"Jun–Oct", tips:"Perfect for beginners. No high altitude sickness risk." },
+      { name:"Alchi Monastery", type:"hidden", cat:"religious", lat:34.2200, lng:77.1500, dist:66, img:"https://images.unsplash.com/photo-1566552881560-0be862a7c445?w=400&q=80", desc:"11th century monastery with the finest ancient Buddhist murals in the world. Few visitors.", entryFee:"₹50", bestTime:"Jun–Sep", tips:"Hire a local guide — the art history is incredible." },
+      { name:"Zanskar Valley", type:"hidden", cat:"adventure", lat:33.5000, lng:77.0000, dist:200, img:"https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=400&q=80", desc:"One of the most remote valleys in the world — frozen river trekking in winter (Chadar Trek).", entryFee:"Guide required", bestTime:"Jan–Feb (Chadar), Jun–Sep (normal)", tips:"Chadar Trek is a once-in-a-lifetime experience." },
+    ]
+  },
+  jaipur: {
+    name: "Jaipur", state: "Rajasthan", tag: "Pink City",
+    img: "https://images.unsplash.com/photo-1477587458883-47145ed31074?w=1400&q=80",
+    desc: "Forts, palaces and bazaars — the Pink City.",
+    refPoint: "Hawa Mahal", refLat: 26.9239, refLng: 75.8267,
+    mapCenter: [26.9239, 75.8267], mapZoom: 12,
+    places: [
+      { name:"Hawa Mahal", type:"popular", cat:"nature", lat:26.9239, lng:75.8267, dist:0, img:"https://images.unsplash.com/photo-1477587458883-47145ed31074?w=400&q=80", desc:"The 'Palace of Winds' — 953 windows for royal women to observe street life undetected.", entryFee:"₹50", bestTime:"Oct–Mar", tips:"Best photographed from the tea shop across the street." },
+      { name:"Amber Fort", type:"popular", cat:"nature", lat:26.9855, lng:75.8513, dist:11, img:"https://images.unsplash.com/photo-1524492412937-b28074a5d7da?w=400&q=80", desc:"Majestic hilltop fort with mirror halls, elephant rides and light & sound shows.", entryFee:"₹200", bestTime:"Oct–Mar", tips:"Elephant rides start at 6 AM — book early." },
+      { name:"City Palace", type:"popular", cat:"religious", lat:26.9258, lng:75.8237, dist:0.3, img:"https://images.unsplash.com/photo-1567591370641-755e01e07614?w=400&q=80", desc:"Royal residence turned museum with Rajput-Mughal architecture and royal armoury.", entryFee:"₹200", bestTime:"Oct–Mar", tips:"The royal family still lives in part of the palace." },
+      { name:"Jantar Mantar", type:"popular", cat:"nature", lat:26.9247, lng:75.8245, dist:0.1, img:"https://images.unsplash.com/photo-1477587458883-47145ed31074?w=400&q=80", desc:"UNESCO World Heritage astronomical observatory with the world's largest stone sundial.", entryFee:"₹50", bestTime:"Year-round", tips:"The Samrat Yantra is accurate to 2 seconds." },
+      { name:"Nahargarh Fort", type:"popular", cat:"nature", lat:26.9469, lng:75.8073, dist:5, img:"https://images.unsplash.com/photo-1598977639756-5d80439eb18b?w=400&q=80", desc:"Hilltop fort with the best sunset views of the Pink City — and a unique wax museum.", entryFee:"₹50", bestTime:"Oct–Mar", tips:"Visit at sunset — the city turns golden." },
+      { name:"Jaigarh Fort", type:"popular", cat:"adventure", lat:26.9890, lng:75.8460, dist:12, img:"https://images.unsplash.com/photo-1524492412937-b28074a5d7da?w=400&q=80", desc:"Military fort housing the world's largest cannon on wheels — Jaivana cannon.", entryFee:"₹35", bestTime:"Oct–Mar", tips:"Connected to Amber Fort by underground passage." },
+      { name:"Johari Bazaar", type:"popular", cat:"nature", lat:26.9220, lng:75.8230, dist:0.2, img:"https://images.unsplash.com/photo-1477587458883-47145ed31074?w=400&q=80", desc:"Famous jewellery market — Jaipur is India's gem cutting capital.", entryFee:"Free", bestTime:"Oct–Mar", tips:"Bargain hard — expect 50% of first quoted price." },
+      { name:"Panna Meena Ka Kund", type:"hidden", cat:"nature", lat:26.9880, lng:75.8560, dist:12, img:"https://images.unsplash.com/photo-1590237748978-e84e2a8a8e81?w=400&q=80", desc:"A stunning 16th century stepwell near Amber Fort that most tourists walk right past.", entryFee:"Free", bestTime:"Oct–Mar", tips:"Empty and peaceful in early morning." },
+      { name:"Galta Ji Monkey Temple", type:"hidden", cat:"religious", lat:26.9200, lng:75.8700, dist:10, img:"https://images.unsplash.com/photo-1566552881560-0be862a7c445?w=400&q=80", desc:"Pink sandstone temple complex built around natural kund — thousands of monkeys live here.", entryFee:"Free", bestTime:"Oct–Mar", tips:"Go at sunrise — incredible atmosphere with pilgrims and monkeys." },
+      { name:"Chokhi Dhani", type:"popular", cat:"nature", lat:26.8000, lng:75.8167, dist:16, img:"https://images.unsplash.com/photo-1598977639756-5d80439eb18b?w=400&q=80", desc:"Rajasthani cultural village with folk dances, camel rides, traditional food.", entryFee:"₹900", bestTime:"Oct–Mar", tips:"Full evening experience — arrive by 6 PM." },
+      { name:"Abhaneri Stepwell", type:"hidden", cat:"nature", lat:27.0050, lng:76.6050, dist:90, img:"https://images.unsplash.com/photo-1590237748978-e84e2a8a8e81?w=400&q=80", desc:"One of India's most spectacular stepwells — 13 stories deep, 3500 steps, 9th century.", entryFee:"₹25", bestTime:"Oct–Mar", tips:"Day trip from Jaipur — barely visited by foreigners." },
+    ]
+  },
+  // DEFAULT fallback data for other destinations
+};
+
+// Generic fallback for destinations without full data
+function getDestData(id) {
+  if (DEST_DATA[id]) return DEST_DATA[id];
+  // Fallback from destinations list
+  const fallbacks = {
+    spiti: { name:"Spiti Valley", state:"Himachal Pradesh", tag:"Hidden Valley", img:"https://images.unsplash.com/photo-1604608672516-5413d1e7e767?w=1400&q=80", refPoint:"Kaza Town", refLat:32.2273, refLng:78.0718, mapCenter:[32.2273,78.0718], mapZoom:10, places:[] },
+    dharamsala: { name:"Dharamsala", state:"Himachal Pradesh", tag:"Tibetan Culture", img:"https://images.unsplash.com/photo-1605640840605-14ac1855827b?w=1400&q=80", refPoint:"McLeod Ganj Square", refLat:32.2424, refLng:76.3234, mapCenter:[32.2424,76.3234], mapZoom:13, places:[] },
+    mussoorie: { name:"Mussoorie", state:"Uttarakhand", tag:"Queen of Hills", img:"https://images.unsplash.com/photo-1588083949404-c4f1ed1323b3?w=1400&q=80", refPoint:"Mall Road Mussoorie", refLat:30.4598, refLng:78.0664, mapCenter:[30.4598,78.0664], mapZoom:13, places:[] },
+    nainital: { name:"Nainital", state:"Uttarakhand", tag:"Lake District", img:"https://images.unsplash.com/photo-1605637297785-f8a4ffd2a34e?w=1400&q=80", refPoint:"Naini Lake", refLat:29.3919, refLng:79.4542, mapCenter:[29.3919,79.4542], mapZoom:13, places:[] },
+    udaipur: { name:"Udaipur", state:"Rajasthan", tag:"City of Lakes", img:"https://images.unsplash.com/photo-1524613032530-449a5d94c285?w=1400&q=80", refPoint:"City Palace Udaipur", refLat:24.5763, refLng:73.6837, mapCenter:[24.5763,73.6837], mapZoom:13, places:[] },
+    goa: { name:"Goa", state:"Goa", tag:"Coastal Paradise", img:"https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?w=1400&q=80", refPoint:"Calangute Beach", refLat:15.5434, refLng:73.7551, mapCenter:[15.5434,73.7551], mapZoom:11, places:[] },
+    mumbai: { name:"Mumbai", state:"Maharashtra", tag:"City of Dreams", img:"https://images.unsplash.com/photo-1570168007204-dfb528c6958f?w=1400&q=80", refPoint:"Gateway of India", refLat:18.9220, refLng:72.8347, mapCenter:[18.9220,72.8347], mapZoom:12, places:[] },
+    coorg: { name:"Coorg", state:"Karnataka", tag:"Scotland of India", img:"https://images.unsplash.com/photo-1582510003544-4d00b7f74220?w=1400&q=80", refPoint:"Madikeri Town", refLat:12.4244, refLng:75.7382, mapCenter:[12.4244,75.7382], mapZoom:12, places:[] },
+    munnar: { name:"Munnar", state:"Kerala", tag:"Tea Country", img:"https://images.unsplash.com/photo-1609766418204-94aae0ecfdfc?w=1400&q=80", refPoint:"Munnar Town Centre", refLat:10.0889, refLng:77.0595, mapCenter:[10.0889,77.0595], mapZoom:12, places:[] },
+    alleppey: { name:"Alleppey", state:"Kerala", tag:"Backwaters", img:"https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?w=1400&q=80", refPoint:"Alleppey Beach", refLat:9.4981, refLng:76.3388, mapCenter:[9.4981,76.3388], mapZoom:12, places:[] },
+    hampi: { name:"Hampi", state:"Karnataka", tag:"Ancient Ruins", img:"https://images.unsplash.com/photo-1600180758890-6b94519a8ba6?w=1400&q=80", refPoint:"Virupaksha Temple", refLat:15.3350, refLng:76.4600, mapCenter:[15.3350,76.4600], mapZoom:13, places:[] },
+    ooty: { name:"Ooty", state:"Tamil Nadu", tag:"Blue Mountains", img:"https://images.unsplash.com/photo-1590050752117-238cb0fb12b1?w=1400&q=80", refPoint:"Ooty Lake", refLat:11.4102, refLng:76.6950, mapCenter:[11.4102,76.6950], mapZoom:12, places:[] },
+    darjeeling: { name:"Darjeeling", state:"West Bengal", tag:"Tea & Peaks", img:"https://images.unsplash.com/photo-1544735716-392fe2489ffa?w=1400&q=80", refPoint:"Chowrasta Mall", refLat:27.0410, refLng:88.2663, mapCenter:[27.0410,88.2663], mapZoom:13, places:[] },
+    gangtok: { name:"Gangtok", state:"Sikkim", tag:"Himalayan Capital", img:"https://images.unsplash.com/photo-1589182373726-e4f658ab50f0?w=1400&q=80", refPoint:"MG Marg", refLat:27.3389, refLng:88.6065, mapCenter:[27.3389,88.6065], mapZoom:13, places:[] },
+    kaziranga: { name:"Kaziranga", state:"Assam", tag:"Wildlife Sanctuary", img:"https://images.unsplash.com/photo-1534476478164-b15bde51b27e?w=1400&q=80", refPoint:"Kohora Gate", refLat:26.5775, refLng:93.1711, mapCenter:[26.5775,93.1711], mapZoom:11, places:[] },
+    varanasi: { name:"Varanasi", state:"Uttar Pradesh", tag:"Spiritual Capital", img:"https://images.unsplash.com/photo-1561361058-c24e5f2517a0?w=1400&q=80", refPoint:"Dashashwamedh Ghat", refLat:25.3070, refLng:83.0107, mapCenter:[25.3070,83.0107], mapZoom:14, places:[] },
+    khajuraho: { name:"Khajuraho", state:"Madhya Pradesh", tag:"Temple Town", img:"https://images.unsplash.com/photo-1567591370641-755e01e07614?w=1400&q=80", refPoint:"Western Temple Group", refLat:24.8318, refLng:79.9199, mapCenter:[24.8318,79.9199], mapZoom:14, places:[] },
+    orchha: { name:"Orchha", state:"Madhya Pradesh", tag:"Forgotten Kingdom", img:"https://images.unsplash.com/photo-1590237748978-e84e2a8a8e81?w=1400&q=80", refPoint:"Orchha Fort", refLat:25.3516, refLng:78.6412, mapCenter:[25.3516,78.6412], mapZoom:14, places:[] },
+  };
+  return fallbacks[id] || null;
+}
+
+// =============================================
+// INIT
+// =============================================
+const params = new URLSearchParams(window.location.search);
+const destId = params.get('id') || 'rishikesh';
+const dest = getDestData(destId);
+
+if (!dest) {
+  document.body.innerHTML = '<div style="padding:80px;text-align:center"><h2>Destination not found</h2><a href="destinations.html">← Back</a></div>';
+} else {
+  // Set hero
+  document.title = dest.name + ' – Ghoomte Raho';
+  document.getElementById('detailHeroBg').style.backgroundImage = `url('${dest.img}')`;
+  document.getElementById('detailTag').textContent = dest.tag;
+  document.getElementById('detailName').textContent = dest.name;
+  document.getElementById('detailState').innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> ${dest.state}`;
+  document.getElementById('mapRefNote').textContent = `All distances measured from ${dest.refPoint}.`;
+
+  const popularCount = dest.places.filter(p => p.type === 'popular').length;
+  const hiddenCount = dest.places.filter(p => p.type === 'hidden').length;
+  document.getElementById('detailStats').innerHTML = `
+    <div class="detail-stat"><span>${dest.places.length}</span> Places</div>
+    <div class="detail-stat"><span>${popularCount}</span> Popular</div>
+    <div class="detail-stat"><span style="color:#e8a045">${hiddenCount}</span> Hidden Gems</div>
+  `;
+
+  // ---- MAP ----
+  if (dest.places.length > 0) {
+    const map = L.map('destMap', { zoomControl: true }).setView(dest.mapCenter, dest.mapZoom);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '© OpenStreetMap', maxZoom: 18
+    }).addTo(map);
+
+    // Reference marker
+    const refIcon = L.divIcon({ className: '', html: `<div style="background:#2d6a4f;color:#fff;padding:4px 8px;border-radius:6px;font-size:11px;font-weight:700;white-space:nowrap;box-shadow:0 2px 8px rgba(0,0,0,0.3)">📍 ${dest.refPoint}</div>`, iconAnchor:[0,0] });
+    L.marker([dest.refLat, dest.refLng], { icon: refIcon }).addTo(map);
+
+    dest.places.forEach(place => {
+      const color = place.type === 'hidden' ? '#e8a045' : '#2d6a4f';
+      const icon = L.divIcon({
+        className: '',
+        html: `<div style="background:${color};width:14px;height:14px;border-radius:50%;border:2px solid #fff;box-shadow:0 1px 6px rgba(0,0,0,0.35);cursor:pointer"></div>`,
+        iconAnchor: [7, 7]
+      });
+      const marker = L.marker([place.lat, place.lng], { icon }).addTo(map);
+      marker.bindPopup(`
+        <div style="font-family:'DM Sans',sans-serif;min-width:180px">
+          <strong style="font-size:0.9rem">${place.name}</strong><br/>
+          <span style="font-size:0.75rem;color:#6b7280">${place.dist === 0 ? 'Reference Point' : place.dist + ' km from ' + dest.refPoint}</span><br/>
+          <span style="font-size:0.75rem;margin-top:4px;display:block">${place.desc.substring(0,80)}…</span>
+          <span style="font-size:0.72rem;margin-top:4px;display:block;color:${color};font-weight:600">${place.type === 'hidden' ? '⭐ Hidden Gem' : '🔥 Popular'}</span>
+        </div>
+      `);
+      marker.on('click', () => {
+        const card = document.querySelector(`[data-place="${place.name}"]`);
+        if (card) { card.scrollIntoView({ behavior: 'smooth', block: 'center' }); card.classList.add('highlight'); setTimeout(() => card.classList.remove('highlight'), 2000); }
+      });
+    });
+  } else {
+    document.querySelector('.detail-map-section').innerHTML = `<div style="padding:40px;text-align:center;color:#6b7280"><p>Map data coming soon for ${dest.name}. <a href="destinations.html" style="color:#2d6a4f;font-weight:600">← Back to Destinations</a></p></div>`;
+  }
+
+  // ---- PLACES CARDS ----
+  function renderPlaces(list) {
+    const grid = document.getElementById('placesGrid');
+    if (!list.length) { grid.innerHTML = '<p style="color:#6b7280;padding:40px;text-align:center">No places found.</p>'; return; }
+    grid.innerHTML = list.map(p => `
+      <div class="place-card" data-place="${p.name}">
+        <div class="place-card-img">
+          <img src="${p.img}" alt="${p.name}" loading="lazy"/>
+          <span class="place-type-badge ${p.type}">${p.type === 'hidden' ? '⭐ Hidden Gem' : '🔥 Popular'}</span>
+          ${p.dist > 0 ? `<span class="place-dist-badge"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> ${p.dist} km</span>` : '<span class="place-dist-badge ref">📍 Ref Point</span>'}
+        </div>
+        <div class="place-card-body">
+          <span class="place-cat-tag">${p.cat}</span>
+          <h4>${p.name}</h4>
+          <p>${p.desc}</p>
+          <div class="place-info-row">
+            <div class="place-info-item">
+              <span class="place-info-label">Entry</span>
+              <span class="place-info-val">${p.entryFee}</span>
+            </div>
+            <div class="place-info-item">
+              <span class="place-info-label">Best Time</span>
+              <span class="place-info-val">${p.bestTime}</span>
+            </div>
+          </div>
+          <div class="place-tip">💡 ${p.tips}</div>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  function applyPlacesFilter() {
+    const q = document.getElementById('placeSearch').value.toLowerCase();
+    const filter = document.querySelector('#placesFilter .dest-tab.active').dataset.filter;
+    let list = dest.places;
+    if (filter !== 'all') {
+      if (filter === 'popular' || filter === 'hidden') list = list.filter(p => p.type === filter);
+      else list = list.filter(p => p.cat === filter);
+    }
+    if (q) list = list.filter(p => p.name.toLowerCase().includes(q) || p.desc.toLowerCase().includes(q));
+    renderPlaces(list);
+  }
+
+  document.getElementById('placeSearch').addEventListener('input', applyPlacesFilter);
+  document.querySelectorAll('#placesFilter .dest-tab').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('#placesFilter .dest-tab').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      applyPlacesFilter();
+    });
+  });
+
+  if (dest.places.length > 0) renderPlaces(dest.places);
+  else document.querySelector('.detail-places-section').innerHTML = `<div style="padding:40px;text-align:center;color:#6b7280"><p>Places data coming soon. <br/><br/><a href="destinations.html" style="color:#2d6a4f;font-weight:600">← Back to Destinations</a></p></div>`;
+}
+
+// Navbar
+window.addEventListener('scroll', () => document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 10));
+document.getElementById('hamburger').addEventListener('click', () => {
+  document.getElementById('hamburger').classList.toggle('open');
+  document.getElementById('mobileMenu').classList.toggle('open');
+});
+</script>
+</body>
+</html>

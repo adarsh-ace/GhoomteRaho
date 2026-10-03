@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Ghoomte Raho – Discover India's Hidden Trails</title>
+  <link rel="stylesheet" href="style.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="navbar">
+  <div class="nav-inner">
+    <a href="index.html" class="logo">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3l4 8 5-5 5 15H2L8 3z"/></svg>
+      Ghoomte Raho
+    </a>
+    <div class="nav-links">
+      <a href="treks.html">All Treks</a>
+      <a href="destinations.html">Destinations</a>
+      <a href="explore.html">AI Explore</a>
+    </div>
+    <div class="nav-auth">
+      <!-- <a href="#" class="btn-ghost">Log in</a> -->
+      <a href="auth.html" class="btn-primary">Sign up</a>
+    </div>
+    <button class="hamburger" id="hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="treks.html">All Treks</a>
+     <a href="destinations.html">Destinations</a>
+    <a href="explore.html">AI Explore</a>
+    <!-- <a href="#">Log in</a> -->
+    <a href="auth.html" class="btn-primary">Sign up</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg">
+    <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1600&q=80" alt="Mountain trail" class="hero-img"/>
+    <div class="hero-overlay"></div>
+  </div>
+  <div class="hero-content">
+    <p class="hero-eyebrow">Off the beaten path</p>
+    <h1 class="hero-title">Discover India's<br/><em>Hidden Trails</em></h1>
+    <p class="hero-sub">Go off the beaten path. AI-curated trekking recommendations and personalized itineraries for serious explorers.</p>
+    <div class="hero-ctas">
+      <a href="explore.html" class="btn-primary btn-lg">Find Hidden Gems</a>
+      <a href="treks.html" class="btn-outline btn-lg">Browse All Treks</a>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<section class="stats">
+  <div class="stats-grid">
+    <div class="stat-card">
+      <div class="stat-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M8 3l4 8 5-5 5 15H2L8 3z"/></svg></div>
+      <div class="stat-num">12</div>
+      <div class="stat-label">Trails Indexed</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon" style="color:#e8a045"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg></div>
+      <div class="stat-num">9</div>
+      <div class="stat-label">Hidden Gems</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon" style="color:#3a8c5c"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+      <div class="stat-num">2.4/10</div>
+      <div class="stat-label">Avg Crowd Score</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon" style="color:#4a7ebf"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14,2 14,8 20,8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10,9 9,9 8,9"/></svg></div>
+      <div class="stat-num">100%</div>
+      <div class="stat-label">Off-Grid Maps</div>
+    </div>
+  </div>
+</section>
+
+<!-- TOP RATED -->
+<section class="top-rated">
+  <div class="section-header">
+    <div>
+      <h2>Top Rated Explorations</h2>
+      <p class="section-sub">Highest community satisfaction across our database.</p>
+    </div id = "viewbtn">
+    <a href="treks.html" class="view-all">View all</a>
+  </div>
+  <div class="cards-grid top-cards">
+    <div class="trek-card" onclick="window.location.href='treks.html'">
+      <div class="card-img-wrap">
+        <span class="difficulty easy">Easy</span>
+        <img src="https://images.unsplash.com/photo-1448375240586-882707db888b?w=600&q=80" alt="Dayara Bugyal"/>
+      </div>
+      <div class="card-body">
+        <h3>Dayara Bugyal</h3>
+        <div class="card-meta">
+          <span><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> Dayara, Uttarakhand</span>
+        </div>
+        <div class="card-stats">
+          <span><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/></svg> 3408m alt</span>
+          <span><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg> Crowd: 2.5/10</span>
+        </div>
+        <p class="card-desc">One of the most beautiful alpine meadows in India with stunning 360-degree Himalayan views. Often called the hidden meadow…</p>
+        <div class="card-footer">
+          <span class="sentiment positive">positive (89%)</span>
+          <a href="treks.html" class="explore-link">Explore Details</a>
+        </div>
+      </div>
+    </div>
+    <div class="trek-card" onclick="window.location.href='treks.html'">
+      <div class="card-img-wrap">
+        <span class="difficulty hard">Hard</span>
+        <img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=600&q=80" alt="Rupin Pass"/>
+      </div>
+      <div class="card-body">
+        <h3>Rupin Pass</h3>
+        <div class="card-meta">
+          <span><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> Rupin, Himachal Pradesh</span>
+        </div>
+        <div class="card-stats">
+          <span><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/></svg> 4650m alt</span>
+          <span><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg> Crowd: 1.6/10</span>
+        </div>
+        <p class="card-desc">Ranked among the best treks in India, the Rupin Pass is a dramatic high-altitude crossing through varied terrain — from…</p>
+        <div class="card-footer">
+          <span class="sentiment positive">positive (87%)</span>
+          <a href="treks.html" class="explore-link">Explore Details</a>
+        </div>
+      </div>
+    </div>
+    <div class="trek-card" onclick="window.location.href='treks.html'">
+      <div class="card-img-wrap">
+        <span class="difficulty hard">Hard</span>
+        <img src="https://images.unsplash.com/photo-1551632811-561732d1e306?w=600&q=80" alt="Goechala Trek"/>
+      </div>
+      <div class="card-body">
+        <h3>Goechala Trek</h3>
+        <div class="card-meta">
+          <span><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> Goechala, Sikkim</span>
+        </div>
+        <div class="card-stats">
+          <span><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/></svg> 4940m alt</span>
+          <span><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg> Crowd: 1.9/10</span>
+        </div>
+        <p class="card-desc">One of the most spectacular yet underrated treks in India offering the closest view of Kanchenjunga, the world's third highest pea…</p>
+        <div class="card-footer">
+          <span class="sentiment positive">positive (87%)</span>
+          <a href="treks.html" class="explore-link">Explore Details</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPLORE BY DESTINATION -->
+<section class="destinations">
+  <div class="section-header">
+    <div>
+      <h2>Explore by Destination</h2>
+      <p class="section-sub">From desert sands to mountain passes — pick your next adventure.</p>
+    </div>
+    <a href="treks.html" class="view-all">View all</a>
+  </div>
+  <div class="dest-grid">
+
+    <!-- Rishikesh – Large card -->
+    <div class="dest-card dest-large" onclick="window.location.href='treks.html'" style="background-image:url('https://images.unsplash.com/photo-1544681280-d762bcde6d0f?w=900&q=80')">
+      <div class="dest-overlay"></div>
+      <div class="dest-body">
+        <span class="dest-tag">Adventure Hub</span>
+        <h3>Rishikesh</h3>
+        <p>Uttarakhand</p>
+        <div class="dest-meta"><span>🏕️ River camps</span><span>🧘 Yoga retreats</span><span>🌊 Rafting</span></div>
+      </div>
+    </div>
+
+    <!-- Manali -->
+    <div class="dest-card" onclick="window.location.href='treks.html'" style="background-image:url('https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?w=600&q=80')">
+      <div class="dest-overlay"></div>
+      <div class="dest-body">
+        <span class="dest-tag">Snow Trails</span>
+        <h3>Manali</h3>
+        <p>Himachal Pradesh</p>
+        <div class="dest-meta"><span>❄️ Snow treks</span><span>🏔️ 3978m</span></div>
+      </div>
+    </div>
+
+    <!-- Shimla -->
+    <div class="dest-card" onclick="window.location.href='treks.html'" style="background-image:url('https://images.unsplash.com/photo-1597466599360-3b9775841aec?w=600&q=80')">
+      <div class="dest-overlay"></div>
+      <div class="dest-body">
+        <span class="dest-tag">Colonial Charm</span>
+        <h3>Shimla</h3>
+        <p>Himachal Pradesh</p>
+        <div class="dest-meta"><span>🌲 Forest walks</span><span>🚂 Heritage rail</span></div>
+      </div>
+    </div>
+
+    <!-- Jaipur -->
+    <div class="dest-card" onclick="window.location.href='treks.html'" style="background-image:url('https://images.unsplash.com/photo-1477587458883-47145ed31074?w=600&q=80')">
+      <div class="dest-overlay"></div>
+      <div class="dest-body">
+        <span class="dest-tag">Pink City</span>
+        <h3>Jaipur</h3>
+        <p>Rajasthan</p>
+        <div class="dest-meta"><span>🏰 Fort trails</span><span>🐫 Desert edge</span></div>
+      </div>
+    </div>
+
+    <!-- Jaisalmer – Large card -->
+    <div class="dest-card dest-large" onclick="window.location.href='treks.html'" style="background-image:url('https://images.unsplash.com/photo-1598977639756-5d80439eb18b?w=900&q=80')">
+      <div class="dest-overlay"></div>
+      <div class="dest-body">
+        <span class="dest-tag">Desert Kingdom</span>
+        <h3>Jaisalmer</h3>
+        <p>Rajasthan</p>
+        <div class="dest-meta"><span>🌅 Dune camping</span><span>🐫 Camel treks</span><span>🏜️ Thar Desert</span></div>
+      </div>
+    </div>
+
+    <!-- Spiti Valley -->
+    <div class="dest-card" onclick="window.location.href='treks.html'" style="background-image:url('https://images.unsplash.com/photo-1604608672516-5413d1e7e767?w=600&q=80')">
+      <div class="dest-overlay"></div>
+      <div class="dest-body">
+        <span class="dest-tag">Hidden Valley</span>
+        <h3>Spiti Valley</h3>
+        <p>Himachal Pradesh</p>
+        <div class="dest-meta"><span>🏔️ 4500m</span><span>🪨 Moonscapes</span></div>
+      </div>
+    </div>
+
+    <!-- Coorg -->
+    <div class="dest-card" onclick="window.location.href='treks.html'" style="background-image:url('https://images.unsplash.com/photo-1582510003544-4d00b7f74220?w=600&q=80')">
+      <div class="dest-overlay"></div>
+      <div class="dest-body">
+        <span class="dest-tag">Scotland of India</span>
+        <h3>Coorg</h3>
+        <p>Karnataka</p>
+        <div class="dest-meta"><span>☕ Coffee trails</span><span>🌿 Forest treks</span></div>
+      </div>
+    </div>
+
+    <!-- Leh Ladakh -->
+    <div class="dest-card" onclick="window.location.href='treks.html'" style="background-image:url('https://images.unsplash.com/photo-1589182373726-e4f658ab50f0?w=600&q=80')">
+      <div class="dest-overlay"></div>
+      <div class="dest-body">
+        <span class="dest-tag">High Altitude</span>
+        <h3>Leh – Ladakh</h3>
+        <p>J&K / Ladakh</p>
+        <div class="dest-meta"><span>🏔️ 5000m+</span><span>🛣️ Epic roads</span></div>
+      </div>
+    </div>
+
+    <!-- Munnar -->
+    <div class="dest-card" onclick="window.location.href='treks.html'" style="background-image:url('https://images.unsplash.com/photo-1609766418204-94aae0ecfdfc?w=600&q=80')">
+      <div class="dest-overlay"></div>
+      <div class="dest-body">
+        <span class="dest-tag">Tea Country</span>
+        <h3>Munnar</h3>
+        <p>Kerala</p>
+        <div class="dest-meta"><span>🍃 Tea gardens</span><span>🌄 Misty hills</span></div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-logo">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3l4 8 5-5 5 15H2L8 3z"/></svg>
+      Ghoomte Raho
+    </div>
+    <p class="footer-tagline">Built for trekkers, by trekkers. Discover the hidden gems of India.</p>
+    <div class="footer-links">
+      <a href="treks.html">Treks</a>
+      <a href="explore.html">Explore</a>
+    </div>
+  </div>
+</footer>
+
+<script src="main.js"></script>
+</body>
+</html>

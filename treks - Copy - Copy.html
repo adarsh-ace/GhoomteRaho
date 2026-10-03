@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>All Treks – Ghoomte Raho</title>
+  <link rel="stylesheet" href="style.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+</head>
+<body>
+
+<nav id="navbar">
+  <div class="nav-inner">
+    <a href="index.html" class="logo">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3l4 8 5-5 5 15H2L8 3z"/></svg>
+      Ghoomte Raho
+    </a>
+    <div class="nav-links">
+      <a href="treks.html" class="active">All Treks</a>
+      <a href="destinations.html">Destinations</a>
+      <a href="explore.html">AI Explore</a>
+    </div>
+  
+     <div class="nav-auth">
+      <!-- <a href="#" class="btn-ghost">Log in</a> -->
+      <a href="auth.html" class="btn-primary">Sign up</a>
+    </div>
+    <button class="hamburger" id="hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="treks.html">All Treks</a>
+    <a href="explore.html">AI Explore</a>
+    <a href="#">Log in</a>
+    <a href="#" class="btn-primary">Sign up</a>
+  </div>
+</nav>
+
+<main class="treks-main">
+  <div class="treks-header">
+    <div>
+      <h1>All Treks</h1>
+      <p>Discover verified trails across the country.</p>
+    </div>
+    <div class="treks-controls">
+      <div class="search-wrap">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <input type="text" id="searchInput" placeholder="Search treks or locations..." />
+      </div>
+      <div class="filter-wrap">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg>
+        <select id="diffFilter">
+          <option value="all">All Difficulties</option>
+          <option value="easy">Easy</option>
+          <option value="moderate">Moderate</option>
+          <option value="hard">Hard</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <div class="cards-grid" id="treksGrid">
+    <!-- Injected by JS -->
+  </div>
+  <p id="noResults" class="no-results" style="display:none">No treks found matching your search.</p>
+</main>
+
+<!-- TREK DETAIL MODAL -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal" id="trekModal">
+    <button class="modal-close" id="modalClose">&times;</button>
+    <div class="modal-img-wrap">
+      <img id="modalImg" src="" alt=""/>
+      <span class="difficulty" id="modalDiff"></span>
+    </div>
+    <div class="modal-body">
+      <h2 id="modalTitle"></h2>
+      <div class="modal-meta" id="modalMeta"></div>
+      <p id="modalDesc"></p>
+      <div class="modal-tags" id="modalTags"></div>
+      <a href="explore.html" class="btn-primary btn-lg" style="margin-top:1.5rem;display:inline-block">Plan This Trek with AI</a>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-logo">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3l4 8 5-5 5 15H2L8 3z"/></svg>
+      Ghoomte Raho
+    </div>
+    <p class="footer-tagline">Built for trekkers, by trekkers. Discover the hidden gems of India.</p>
+    <div class="footer-links">
+      <a href="treks.html">Treks</a>
+      <a href="explore.html">Explore</a>
+    </div>
+  </div>
+</footer>
+
+<script src="main.js"></script>
+</body>
+</html>

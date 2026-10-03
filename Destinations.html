@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>All Destinations – Ghoomte Raho</title>
+  <link rel="stylesheet" href="style.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+</head>
+<body>
+
+<nav id="navbar">
+  <div class="nav-inner">
+    <a href="index.html" class="logo">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3l4 8 5-5 5 15H2L8 3z"/></svg>
+      Ghoomte Raho
+    </a>
+    <div class="nav-links">
+      <a href="treks.html">All Treks</a>
+      <a href="destinations.html" class="active">Destinations</a>
+      <a href="explore.html">AI Explore</a>
+    </div>
+    <div class="nav-auth">
+      <!-- <a href="#" class="btn-ghost">Log in</a> -->
+      <a href="auth.html" class="btn-primary">Sign up</a>
+    </div>
+    <button class="hamburger" id="hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="treks.html">All Treks</a>
+    <a href="destinations.html">Destinations</a>
+    <a href="explore.html">AI Explore</a>
+    <a href="#">Log in</a>
+    <a href="#" class="btn-primary">Sign up</a>
+  </div>
+</nav>
+
+<!-- PAGE HERO -->
+<section class="page-hero">
+  <div class="page-hero-bg" style="background-image:url('https://images.unsplash.com/photo-1524492412937-b28074a5d7da?w=1600&q=80')"></div>
+  <div class="page-hero-overlay"></div>
+  <div class="page-hero-content">
+    <p class="hero-eyebrow">Explore India</p>
+    <h1 class="hero-title">All Destinations</h1>
+    <p class="hero-sub">From misty hill stations to golden deserts — find your perfect escape.</p>
+  </div>
+</section>
+
+<!-- FILTERS -->
+<div class="dest-page-filters">
+  <div class="dest-page-filters-inner">
+    <div class="search-wrap">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      <input type="text" id="destSearch" placeholder="Search destinations…"/>
+    </div>
+    <div class="dest-filter-tabs" id="regionFilter">
+      <button class="dest-tab active" data-region="all">All</button>
+      <button class="dest-tab" data-region="north">North India</button>
+      <button class="dest-tab" data-region="south">South India</button>
+      <button class="dest-tab" data-region="east">East India</button>
+      <button class="dest-tab" data-region="west">West India</button>
+      <button class="dest-tab" data-region="central">Central India</button>
+    </div>
+  </div>
+</div>
+
+<!-- DESTINATIONS GRID -->
+<main class="dest-page-main">
+  <div class="dest-count" id="destCount">Showing all destinations</div>
+  <div class="dest-all-grid" id="destAllGrid">
+    <!-- JS will render cards here -->
+  </div>
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-logo">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3l4 8 5-5 5 15H2L8 3z"/></svg>
+      Ghoomte Raho
+    </div>
+    <p class="footer-tagline">Built for trekkers, by trekkers. Discover the hidden gems of India.</p>
+    <div class="footer-links">
+      <a href="treks.html">Treks</a>
+      <a href="destinations.html">Destinations</a>
+      <a href="explore.html">Explore</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+const DESTINATIONS = [
+  // NORTH INDIA
+  {
+    id: "rishikesh", name: "Rishikesh", state: "Uttarakhand", region: "north",
+    tag: "Adventure Hub", type: "River Town",
+    img: "https://images.unsplash.com/photo-1544681280-d762bcde6d0f?w=600&q=80",
+    placesCount: 18, hiddenGems: 6,
+    desc: "Yoga capital of the world, gateway to Himalayas, rafting & camping paradise on the Ganges."
+  },
+  {
+    id: "manali", name: "Manali", state: "Himachal Pradesh", region: "north",
+    tag: "Snow Trails", type: "Hill Station",
+    img: "https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?w=600&q=80",
+    placesCount: 20, hiddenGems: 7,
+    desc: "Snow-capped peaks, adventure sports and apple orchards in the Kullu Valley."
+  },
+  {
+    id: "shimla", name: "Shimla", state: "Himachal Pradesh", region: "north",
+    tag: "Colonial Charm", type: "Hill Station",
+    img: "https://images.unsplash.com/photo-1597466599360-3b9775841aec?w=600&q=80",
+    placesCount: 15, hiddenGems: 4,
+    desc: "Former summer capital of British India with Victorian architecture and pine forests."
+  },
+  {
+    id: "spiti", name: "Spiti Valley", state: "Himachal Pradesh", region: "north",
+    tag: "Hidden Valley", type: "Cold Desert",
+    img: "https://images.unsplash.com/photo-1604608672516-5413d1e7e767?w=600&q=80",
+    placesCount: 14, hiddenGems: 9,
+    desc: "A cold desert mountain valley with ancient monasteries and stark moonscapes at 4500m."
+  },
+  {
+    id: "leh", name: "Leh – Ladakh", state: "Ladakh", region: "north",
+    tag: "High Altitude", type: "Desert Mountain",
+    img: "https://images.unsplash.com/photo-1589182373726-e4f658ab50f0?w=600&q=80",
+    placesCount: 22, hiddenGems: 10,
+    desc: "Land of high passes, turquoise lakes and Buddhist monasteries above 3500m."
+  },
+  {
+    id: "dharamsala", name: "Dharamsala", state: "Himachal Pradesh", region: "north",
+    tag: "Tibetan Culture", type: "Hill Town",
+    img: "https://images.unsplash.com/photo-1605640840605-14ac1855827b?w=600&q=80",
+    placesCount: 13, hiddenGems: 5,
+    desc: "Home of the Dalai Lama, Tibetan culture meets Himalayan trekking in McLeod Ganj."
+  },
+  {
+    id: "mussoorie", name: "Mussoorie", state: "Uttarakhand", region: "north",
+    tag: "Queen of Hills", type: "Hill Station",
+    img: "https://images.unsplash.com/photo-1588083949404-c4f1ed1323b3?w=600&q=80",
+    placesCount: 12, hiddenGems: 3,
+    desc: "The Queen of Hills with panoramic Himalayan views, waterfalls and colonial-era charm."
+  },
+  {
+    id: "nainital", name: "Nainital", state: "Uttarakhand", region: "north",
+    tag: "Lake District", type: "Hill Station",
+    img: "https://images.unsplash.com/photo-1605637297785-f8a4ffd2a34e?w=600&q=80",
+    placesCount: 11, hiddenGems: 3,
+    desc: "A picturesque lake town in the Kumaon hills surrounded by dense forests and peaks."
+  },
+  // WEST INDIA
+  {
+    id: "jaipur", name: "Jaipur", state: "Rajasthan", region: "west",
+    tag: "Pink City", type: "Heritage City",
+    img: "https://images.unsplash.com/photo-1477587458883-47145ed31074?w=600&q=80",
+    placesCount: 20, hiddenGems: 6,
+    desc: "Forts, palaces and bazaars — the Pink City is a living museum of Rajput heritage."
+  },
+  {
+    id: "jaisalmer", name: "Jaisalmer", state: "Rajasthan", region: "west",
+    tag: "Desert Kingdom", type: "Desert City",
+    img: "https://images.unsplash.com/photo-1598977639756-5d80439eb18b?w=600&q=80",
+    placesCount: 16, hiddenGems: 8,
+    desc: "The Golden City rising from the Thar Desert — sand dunes, camel trails and a living fort."
+  },
+  {
+    id: "udaipur", name: "Udaipur", state: "Rajasthan", region: "west",
+    tag: "City of Lakes", type: "Heritage City",
+    img: "https://images.unsplash.com/photo-1524613032530-449a5d94c285?w=600&q=80",
+    placesCount: 18, hiddenGems: 5,
+    desc: "The Venice of the East — romantic lakes, marble palaces and Aravalli sunsets."
+  },
+  {
+    id: "goa", name: "Goa", state: "Goa", region: "west",
+    tag: "Coastal Paradise", type: "Beach Destination",
+    img: "https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?w=600&q=80",
+    placesCount: 24, hiddenGems: 9,
+    desc: "Sun, surf and spice — from party beaches to hidden coves and Portuguese heritage."
+  },
+  {
+    id: "mumbai", name: "Mumbai", state: "Maharashtra", region: "west",
+    tag: "City of Dreams", type: "Metro City",
+    img: "https://images.unsplash.com/photo-1570168007204-dfb528c6958f?w=600&q=80",
+    placesCount: 22, hiddenGems: 7,
+    desc: "India's financial capital with sea-facing promenades, street food and hidden heritage."
+  },
+  // SOUTH INDIA
+  {
+    id: "coorg", name: "Coorg", state: "Karnataka", region: "south",
+    tag: "Scotland of India", type: "Hill Station",
+    img: "https://images.unsplash.com/photo-1582510003544-4d00b7f74220?w=600&q=80",
+    placesCount: 14, hiddenGems: 7,
+    desc: "Misty coffee estates, waterfalls and tribal culture in the Western Ghats."
+  },
+  {
+    id: "munnar", name: "Munnar", state: "Kerala", region: "south",
+    tag: "Tea Country", type: "Hill Station",
+    img: "https://images.unsplash.com/photo-1609766418204-94aae0ecfdfc?w=600&q=80",
+    placesCount: 13, hiddenGems: 6,
+    desc: "Endless tea gardens rolling over hills, rare wildlife and cool misty air in Kerala."
+  },
+  {
+    id: "alleppey", name: "Alleppey", state: "Kerala", region: "south",
+    tag: "Backwaters", type: "Waterway",
+    img: "https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?w=600&q=80",
+    placesCount: 12, hiddenGems: 5,
+    desc: "Venice of the East — gliding houseboats through Kerala's famous backwater network."
+  },
+  {
+    id: "hampi", name: "Hampi", state: "Karnataka", region: "south",
+    tag: "Ancient Ruins", type: "Heritage Site",
+    img: "https://images.unsplash.com/photo-1600180758890-6b94519a8ba6?w=600&q=80",
+    placesCount: 16, hiddenGems: 8,
+    desc: "A UNESCO World Heritage Site — ruins of the Vijayanagara Empire amid surreal boulder landscapes."
+  },
+  {
+    id: "ooty", name: "Ooty", state: "Tamil Nadu", region: "south",
+    tag: "Blue Mountains", type: "Hill Station",
+    img: "https://images.unsplash.com/photo-1590050752117-238cb0fb12b1?w=600&q=80",
+    placesCount: 11, hiddenGems: 4,
+    desc: "Nilgiri hills, toy train rides, tea gardens and Toda tribal villages in Tamil Nadu."
+  },
+  // EAST INDIA
+  {
+    id: "darjeeling", name: "Darjeeling", state: "West Bengal", region: "east",
+    tag: "Tea & Peaks", type: "Hill Station",
+    img: "https://images.unsplash.com/photo-1544735716-392fe2489ffa?w=600&q=80",
+    placesCount: 13, hiddenGems: 5,
+    desc: "Kanchenjunga views, Himalayan toy train and the world's finest tea estates."
+  },
+  {
+    id: "gangtok", name: "Gangtok", state: "Sikkim", region: "east",
+    tag: "Himalayan Capital", type: "Hill Town",
+    img: "https://images.unsplash.com/photo-1598977639756-5d80439eb18b?w=600&q=80",
+    placesCount: 14, hiddenGems: 6,
+    desc: "Clean, vibrant hill capital with monasteries, cable cars and Kanchenjunga views."
+  },
+  {
+    id: "kaziranga", name: "Kaziranga", state: "Assam", region: "east",
+    tag: "Wildlife Sanctuary", type: "National Park",
+    img: "https://images.unsplash.com/photo-1534476478164-b15bde51b27e?w=600&q=80",
+    placesCount: 10, hiddenGems: 4,
+    desc: "UNESCO World Heritage Site — home to two-thirds of the world's one-horned rhinoceroses."
+  },
+  // CENTRAL INDIA
+  {
+    id: "varanasi", name: "Varanasi", state: "Uttar Pradesh", region: "central",
+    tag: "Spiritual Capital", type: "Holy City",
+    img: "https://images.unsplash.com/photo-1561361058-c24e5f2517a0?w=600&q=80",
+    placesCount: 18, hiddenGems: 7,
+    desc: "One of the world's oldest living cities — ghats, Ganga aarti and labyrinthine old lanes."
+  },
+  {
+    id: "khajuraho", name: "Khajuraho", state: "Madhya Pradesh", region: "central",
+    tag: "Temple Town", type: "Heritage Site",
+    img: "https://images.unsplash.com/photo-1567591370641-755e01e07614?w=600&q=80",
+    placesCount: 10, hiddenGems: 4,
+    desc: "UNESCO World Heritage temples with extraordinary medieval sculptures in rural MP."
+  },
+  {
+    id: "orchha", name: "Orchha", state: "Madhya Pradesh", region: "central",
+    tag: "Forgotten Kingdom", type: "Heritage Town",
+    img: "https://images.unsplash.com/photo-1590237748978-e84e2a8a8e81?w=600&q=80",
+    placesCount: 11, hiddenGems: 6,
+    desc: "A virtually undiscovered Bundelkhand fort-town with cenotaphs and riverside palaces."
+  },
+];
+
+function renderCards(list) {
+  const grid = document.getElementById('destAllGrid');
+  const count = document.getElementById('destCount');
+  count.textContent = `Showing ${list.length} destination${list.length !== 1 ? 's' : ''}`;
+  grid.innerHTML = list.map(d => `
+    <div class="dest-page-card" onclick="window.location.href='destination-detail.html?id=${d.id}'">
+      <div class="dest-page-img">
+        <img src="${d.img}" alt="${d.name}" loading="lazy"/>
+        <span class="dest-page-tag">${d.tag}</span>
+        <div class="dest-page-gems">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          ${d.hiddenGems} hidden gems
+        </div>
+      </div>
+      <div class="dest-page-body">
+        <div class="dest-page-type">${d.type}</div>
+        <h3>${d.name}</h3>
+        <p class="dest-page-state">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          ${d.state}
+        </p>
+        <p class="dest-page-desc">${d.desc}</p>
+        <div class="dest-page-footer">
+          <span>${d.placesCount} places</span>
+          <span class="dest-explore-link">Explore →</span>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+// Search + filter
+function applyFilters() {
+  const q = document.getElementById('destSearch').value.toLowerCase();
+  const region = document.querySelector('.dest-tab.active').dataset.region;
+  let list = DESTINATIONS;
+  if (region !== 'all') list = list.filter(d => d.region === region);
+  if (q) list = list.filter(d => d.name.toLowerCase().includes(q) || d.state.toLowerCase().includes(q));
+  renderCards(list);
+}
+
+document.getElementById('destSearch').addEventListener('input', applyFilters);
+document.querySelectorAll('.dest-tab').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.dest-tab').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    applyFilters();
+  });
+});
+
+// Navbar scroll
+window.addEventListener('scroll', () => {
+  document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 10);
+});
+document.getElementById('hamburger').addEventListener('click', () => {
+  document.getElementById('hamburger').classList.toggle('open');
+  document.getElementById('mobileMenu').classList.toggle('open');
+});
+
+renderCards(DESTINATIONS);
+</script>
+</body>
+</html>
